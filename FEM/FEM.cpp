@@ -1,6 +1,11 @@
 #include <iostream>
+#include "FEM.h"
 
-void say_hello()
+namespace FEM
 {
-    std::cout << "Hello, from FEM++!\n";
+    void say_hello()
+    {
+        std::cout << "Hello, from FEM++!\n";
+    }
+
 }
