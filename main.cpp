@@ -1,8 +1,10 @@
 #include <iostream>
 #include "FEM.h"
+#include "FEM/Geometry/Geometry.h"
+#include <Eigen/Dense>
 
-int main(int, char **)
+int main()
 {
-    std::cout << "Hello, world!\n";
-    FEM::say_hello();
+    FEM::Geometry *geo = new FEM::Geometry("C:/Users/david/Desktop/FEM++/resources/Cube.json");
+    std::cout << *geo << std::endl;
 }
