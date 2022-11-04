@@ -32,12 +32,19 @@ set(PROJECT_SOURCES
 	main.cpp
 	./FEM/FEM.cpp
 	./FEM/Geometry/Geometry.cpp
-	./FEM/Elements/Element.cpp)
+	./FEM/Elements/Element.cpp
+	./FEM/Elements/Element2D.cpp
+	./FEM/Elements/LTriangular.cpp
+	./FEM/Elements/Serendipity.cpp
+	./FEM/Elements/RectangularScheme.cpp
+	./FEM/Elements/TriangularScheme.cpp
+	./FEM/Utils/Utils.cpp)
 
 set(PROJECT_HEADERS
 	${PROJECT_SOURCE_DIR}/FEM
 	${PROJECT_SOURCE_DIR}/FEM/Geometry
-	${PROJECT_SOURCE_DIR}/FEM/Elements)
+	${PROJECT_SOURCE_DIR}/FEM/Elements
+	${PROJECT_SOURCE_DIR}/FEM/Utils)
 
 include_directories("${PROJECT_HEADERS}")
 

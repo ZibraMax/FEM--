@@ -39,4 +39,26 @@ namespace FEM
 
 		return output;
 	}
+	bool Element::isInside(std::vector<std::vector<double>> &z)
+	{
+		return false;
+	}
+	std::vector<std::vector<double>> Element::psis(std::vector<std::vector<double>> &z)
+	{
+		return {};
+	}
+
+	std::vector<std::vector<std::vector<double>>> Element::dpsis(std::vector<std::vector<double>> &z)
+	{
+
+		return {};
+	}
+	std::vector<std::vector<std::vector<double>>> *Element::givePsiDerivatives()
+	{
+		return nullptr;
+	}
+	std::vector<std::vector<double>> *Element::givePsi()
+	{
+		return nullptr;
+	}
 } // namespace FEM

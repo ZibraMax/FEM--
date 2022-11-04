@@ -5,6 +5,6 @@
 
 int main()
 {
-    FEM::Geometry *geo = new FEM::Geometry("C:/Users/david/Desktop/FEM++/resources/Cube.json");
+    FEM::Geometry *geo = new FEM::Geometry("C:/Users/david/Desktop/FEM++/resources/Beam_serendipity.json");
     std::cout << *geo << std::endl;
 }

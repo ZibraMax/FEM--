@@ -7,13 +7,18 @@
 #include <vector>
 
 #include "Element.h"
+#include "LTriangular.h"
+#include "Serendipity.h"
 
 #include <nlohmann/json.hpp>
-
+using json = nlohmann::json;
 namespace FEM
 {
 	class Geometry
 	{
+	private:
+		Element *createElement(std::string type, std::vector<std::vector<double *>> coords, std::vector<std::vector<int>>);
+
 	public:
 		std::vector<std::vector<double>> nodes;
 		std::vector<std::vector<int>> dictionary;
@@ -23,6 +28,7 @@ namespace FEM
 		std::vector<std::vector<double>> nbc;
 		int nvn;
 		int ngdl;
+		std::string allElementsType = "";
 		bool allElementsSameType = true;
 
 		std::vector<Element *> elements;

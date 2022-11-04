@@ -24,7 +24,16 @@ namespace FEM
 		i >> j;
 		this->nodes = j["nodes"].get<std::vector<std::vector<double>>>();
 		this->dictionary = j["dictionary"].get<std::vector<std::vector<int>>>();
-		this->types = j["types"].get<std::vector<std::string>>();
+		this->allElementsSameType = j.value("sameTypeElements", true);
+		if (this->allElementsSameType)
+		{
+			this->allElementsType = j["types"].get<std::vector<std::string>>()[0];
+		}
+		else
+		{
+			this->types = j["types"].get<std::vector<std::string>>();
+		}
+
 		this->ebc = j["ebc"].get<std::vector<std::vector<double>>>();
 		this->nbc = j["nbc"].get<std::vector<std::vector<double>>>();
 		this->nvn = j["nvn"].get<int>();
@@ -61,8 +70,18 @@ namespace FEM
 				}
 				gdls.push_back(linea);
 			}
+			std::string tipo;
 
-			this->elements.push_back(new Element(coords, gdls));
+			if (this->allElementsSameType)
+			{
+				tipo = this->allElementsType;
+			}
+			else
+			{
+				tipo = this->types[i];
+			}
+
+			this->elements.push_back(createElement(tipo, coords, gdls));
 		}
 	}
 
@@ -75,7 +94,55 @@ namespace FEM
 	{
 		this->nbc = nbc;
 	}
-
+	Element *Geometry::createElement(std::string type, std::vector<std::vector<double *>> coords, std::vector<std::vector<int>> gdl)
+	{
+		Element *elemento;
+		if (type == "T1V")
+		{
+			elemento = new LTriangular(coords, gdl);
+		}
+		else if (type == "T2V")
+		{
+			/* code */
+		}
+		else if (type == "C1V")
+		{
+			/* code */
+		}
+		else if (type == "C2V")
+		{
+			elemento = new Serendipity(coords, gdl);
+		}
+		else if (type == "L1V")
+		{
+			/* code */
+		}
+		else if (type == "L2V")
+		{
+			/* code */
+		}
+		else if (type == "L3V")
+		{
+			/* code */
+		}
+		else if (type == "B1V")
+		{
+			/* code */
+		}
+		else if (type == "B2V")
+		{
+			/* code */
+		}
+		else if (type == "TE1V")
+		{
+			/* code */
+		}
+		else if (type == "TE2V")
+		{
+			/* code */
+		}
+		return elemento;
+	}
 	std::ostream &operator<<(std::ostream &output, const Geometry geometry)
 	{
 		output << "Geometry " << std::endl;
