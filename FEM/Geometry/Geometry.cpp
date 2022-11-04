@@ -127,7 +127,7 @@ namespace FEM
 		}
 		else if (type == "B1V")
 		{
-			/* code */
+			elemento = new Cube(coords, gdl);
 		}
 		else if (type == "B2V")
 		{

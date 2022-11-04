@@ -32,27 +32,28 @@ namespace FEM
 
 	std::vector<std::vector<std::vector<double>>> Serendipity::dpsis(std::vector<std::vector<double>> &z)
 	{
+		int nz = z[0].size();
 		std::vector<std::vector<std::vector<double>>> res;
-		// int n = z.row(0).size();
-		// for (int i = 0; i < n; i++)
-		// {
-		// 	Eigen::MatrixXd matrix(this->n, this->m);
-		// 	double _z = z(0, i);
-		// 	double _n = z(1, i);
-		// 	matrix << -0.25 * (_n - 1.0) * (2.0 * _z + _n),
-		// 		-0.25 * (_z - 1.0) * (2.0 * _n + _z),
-		// 		-0.25 * (_n - 1.0) * (2.0 * _z - _n),
-		// 		0.25 * (_z + 1.0) * (2.0 * _n - _z),
-		// 		0.25 * (_n + 1.0) * (2.0 * _z + _n),
-		// 		0.25 * (_z + 1.0) * (2.0 * _n + _z),
-		// 		0.25 * (_n + 1.0) * (2.0 * _z - _n),
-		// 		-0.25 * (_z - 1.0) * (2.0 * _n - _z),
-		// 		(_n - 1.0) * _z, 0.5 * (_z * _z - 1.0),
-		// 		-0.5 * (_n * _n - 1.0), -_n * (_z + 1.0),
-		// 		-(_n + 1.0) * _z, -0.5 * (_z * _z - 1.0),
-		// 		0.5 * (_n * _n - 1.0), _n * (_z - 1.0);
-		// 	res.push_back(matrix);
-		// }
+		std::vector<std::vector<double>> fila1;
+		std::vector<std::vector<double>> fila2;
+		std::vector<std::vector<double>> fila3;
+		std::vector<std::vector<double>> fila4;
+		std::vector<std::vector<double>> fila5;
+		std::vector<std::vector<double>> fila6;
+		std::vector<std::vector<double>> fila7;
+		std::vector<std::vector<double>> fila8;
+		for (int i = 0; i < nz; i++)
+		{
+			fila1.push_back({-0.25 * (z[1][i] - 1.0) * (2.0 * z[0][i] + z[1][i]), -0.25 * (z[0][i] - 1.0) * (2.0 * z[1][i] + z[0][i])});
+			fila2.push_back({-0.25 * (z[1][i] - 1.0) * (2.0 * z[0][i] - z[1][i]), 0.25 * (z[0][i] + 1.0) * (2.0 * z[1][i] - z[0][i])});
+			fila3.push_back({0.25 * (z[1][i] + 1.0) * (2.0 * z[0][i] + z[1][i]), 0.25 * (z[0][i] + 1.0) * (2.0 * z[1][i] + z[0][i])});
+			fila4.push_back({0.25 * (z[1][i] + 1.0) * (2.0 * z[0][i] - z[1][i]), -0.25 * (z[0][i] - 1.0) * (2.0 * z[1][i] - z[0][i])});
+			fila5.push_back({(z[1][i] - 1.0) * z[0][i], 0.5 * (z[0][i] * z[0][i] - 1.0)});
+			fila6.push_back({-0.5 * (z[1][i] * z[1][i] - 1.0), -z[1][i] * (z[0][i] + 1.0)});
+			fila7.push_back({-(z[1][i] + 1.0) * z[0][i], -0.5 * (z[0][i] * z[0][i] - 1.0)});
+			fila8.push_back({0.5 * (z[1][i] * z[1][i] - 1.0), z[1][i] * (z[0][i] - 1.0)});
+		}
+		res = {fila1, fila2, fila3, fila4, fila5, fila6, fila7, fila8};
 
 		return res;
 	}

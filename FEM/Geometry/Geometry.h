@@ -9,6 +9,7 @@
 #include "Element.h"
 #include "LTriangular.h"
 #include "Serendipity.h"
+#include "Cube.h"
 
 #include <nlohmann/json.hpp>
 using json = nlohmann::json;
