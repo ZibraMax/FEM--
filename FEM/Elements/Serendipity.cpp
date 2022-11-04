@@ -5,8 +5,8 @@ namespace FEM
 	Serendipity::Serendipity(std::vector<std::vector<double *>> coords, std::vector<std::vector<int>> gdl)
 		: RectangularScheme(3), Element2D(coords, gdl)
 	{
-		// PSI = this->psis(Z);
-		// DPSI = this->dpsis(Z);
+		PSI = this->psis(Z);
+		DPSI = this->dpsis(Z);
 		// Definir bordes
 	}
 

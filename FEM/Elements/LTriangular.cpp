@@ -5,6 +5,8 @@ namespace FEM
 	LTriangular::LTriangular(std::vector<std::vector<double *>> coords, std::vector<std::vector<int>> gdl)
 		: TriangularScheme(), Element2D(coords, gdl)
 	{
+		PSI = this->psis(Z);
+		DPSI = this->dpsis(Z);
 		// Definir bordes
 	}
 
