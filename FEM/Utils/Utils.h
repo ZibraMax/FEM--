@@ -14,6 +14,7 @@ namespace Utils
 	std::vector<double> darPuntos(int n);
 	std::vector<double> darPesos(int n, std::vector<double> puntos);
 	void writeToCSVfile(std::string name, const Eigen::MatrixXd &matrix);
+	void printMatrix(std::vector<std::vector<double>> x);
 
 } // namespace Utils
 

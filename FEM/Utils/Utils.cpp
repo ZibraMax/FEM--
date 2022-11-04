@@ -2,6 +2,17 @@
 const double Pi = 3.141592653589793238463;
 namespace Utils
 {
+	void printMatrix(std::vector<std::vector<double>> x)
+	{
+		for (int i = 0; i < x.size(); i++)
+		{
+			for (int j = 0; j < x[i].size(); j++)
+			{
+				std::cout << x[i][j] << ",";
+			}
+			std::cout << std::endl;
+		}
+	}
 	double p(double x, int n)
 	{
 		if (n == 0)
