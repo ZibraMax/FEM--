@@ -39,6 +39,32 @@ namespace FEM
 
 		return output;
 	}
+
+	std::vector<std::vector<double>> Element::T(std::vector<std::vector<double>> &z)
+	{
+		std::vector<std::vector<double>> P = this->psis(z);
+		Eigen::MatrixXd MP = Utils::matrixFromArray(P);
+		Eigen::MatrixXd Mcoords = Utils::matrixFromArray2(coords);
+		Eigen::MatrixXd Tx = MP * Mcoords;
+		std::vector<std::vector<double>> res = Utils::arrayFromMatrix(Tx);
+		return res;
+	}
+	std::vector<std::vector<std::vector<double>>> Element::J(std::vector<std::vector<double>> &z)
+	{
+		std::vector<std::vector<std::vector<double>>> Dpsis = this->dpsis(z);
+		std::vector<Eigen::MatrixXd> MDpsis;
+		for (int i = 0; i < Dpsis.size(); i++)
+		{
+			MDpsis.push_back(Utils::matrixFromArray(Dpsis[i]));
+		}
+
+		Eigen::MatrixXd MP = Utils::matrixFromArray(P);
+		Eigen::MatrixXd Mcoords = Utils::matrixFromArray2(coords);
+		Eigen::MatrixXd Tx = MP * Mcoords;
+		std::vector<std::vector<double>> res = Utils::arrayFromMatrix(Tx);
+		return res;
+	}
+
 	bool Element::isInside(std::vector<std::vector<double>> &z)
 	{
 		return false;

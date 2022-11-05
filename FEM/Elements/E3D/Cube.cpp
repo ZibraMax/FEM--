@@ -20,14 +20,14 @@ namespace FEM
 			double z = _z[0][i];
 			double n = _z[1][i];
 			double g = _z[2][i];
-			std::vector<double> row = {(1 - z) * (1 - n) * (1 - g),
-									   (1 + z) * (1 - n) * (1 - g),
-									   (1 + z) * (1 + n) * (1 - g),
-									   (1 - z) * (1 + n) * (1 - g),
-									   (1 - z) * (1 - n) * (1 + g),
-									   (1 + z) * (1 - n) * (1 + g),
-									   (1 + z) * (1 + n) * (1 + g),
-									   (1 - z) * (1 + n) * (1 + g)};
+			std::vector<double> row = {(1 - z) * (1 - n) * (1 - g) / 8.0,
+									   (1 + z) * (1 - n) * (1 - g) / 8.0,
+									   (1 + z) * (1 + n) * (1 - g) / 8.0,
+									   (1 - z) * (1 + n) * (1 - g) / 8.0,
+									   (1 - z) * (1 - n) * (1 + g) / 8.0,
+									   (1 + z) * (1 - n) * (1 + g) / 8.0,
+									   (1 + z) * (1 + n) * (1 + g) / 8.0,
+									   (1 - z) * (1 + n) * (1 + g) / 8.0};
 			res.push_back(row);
 		}
 
@@ -51,15 +51,15 @@ namespace FEM
 			double x = _z[0][i];
 			double y = _z[1][i];
 			double z = _z[2][i];
-			fila1.push_back({(y - 1.0) * (1.0 - z), (x - 1) * (1 - z), -(1 - x) * (1 - y)});
-			fila2.push_back({(1 - y) * (1 - z), (-1 - x) * (1 - z), -(1 + x) * (1 - y)});
-			fila3.push_back({(1 + y) * (1 - z), (1 + x) * (1 - z), -(1 + x) * (1 + y)});
-			fila4.push_back({(-1.0 - y) * (1 - z), (1 - x) * (1 - z), -(1 - x) * (1 + y)});
+			fila1.push_back({(y - 1.0) * (1.0 - z) / 8.0, (x - 1) * (1 - z) / 8.0, -(1 - x) * (1 - y) / 8.0});
+			fila2.push_back({(1 - y) * (1 - z) / 8.0, (-1 - x) * (1 - z) / 8.0, -(1 + x) * (1 - y) / 8.0});
+			fila3.push_back({(1 + y) * (1 - z) / 8.0, (1 + x) * (1 - z) / 8.0, -(1 + x) * (1 + y) / 8.0});
+			fila4.push_back({(-1.0 - y) * (1 - z) / 8.0, (1 - x) * (1 - z) / 8.0, -(1 - x) * (1 + y) / 8.0});
 
-			fila5.push_back({(1 - y) * (-1 - z), -(1 - x) * (1 + z), (1 - x) * (1 - y)});
-			fila6.push_back({(1 - y) * (1 + z), -(1 + x) * (1 + z), (1 + x) * (1 - y)});
-			fila7.push_back({(1 + y) * (1 + z), (1 + x) * (1 + z), (1 + x) * (1 + y)});
-			fila8.push_back({-(1 + y) * (1 + z), (1 - x) * (1 + z), (1 - x) * (1 + y)});
+			fila5.push_back({(1 - y) * (-1 - z) / 8.0, -(1 - x) * (1 + z) / 8.0, (1 - x) * (1 - y) / 8.0});
+			fila6.push_back({(1 - y) * (1 + z) / 8.0, -(1 + x) * (1 + z) / 8.0, (1 + x) * (1 - y) / 8.0});
+			fila7.push_back({(1 + y) * (1 + z) / 8.0, (1 + x) * (1 + z) / 8.0, (1 + x) * (1 + y) / 8.0});
+			fila8.push_back({-(1 + y) * (1 + z) / 8.0, (1 - x) * (1 + z) / 8.0, (1 - x) * (1 + y) / 8.0});
 		}
 		res = {fila1, fila2, fila3, fila4, fila5, fila6, fila7, fila8};
 

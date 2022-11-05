@@ -3,7 +3,7 @@
 
 #include <iostream>
 #include <vector>
-
+#include "Utils.h"
 #include <Eigen/Dense>
 
 namespace FEM
@@ -12,9 +12,16 @@ namespace FEM
 	{
 	public:
 		std::vector<std::vector<double *>> coords;
+		std::vector<std::vector<double>> x;
+		std::vector<std::vector<double>> det_jacs;
+		std::vector<std::vector<double>> inv_jacs;
 		std::vector<std::vector<int>> gdls;
+		std::vector<std::vector<std::vector<double>>> dpx;
+
 		int n;
 		Element(std::vector<std::vector<double *>> coords, std::vector<std::vector<int>> gdls);
+		std::vector<std::vector<double>> T(std::vector<std::vector<double>> &z);
+		std::vector<std::vector<std::vector<double>>> J(std::vector<std::vector<double>> &z);
 		friend std::ostream &operator<<(std::ostream &output, const Element e);
 
 		virtual bool isInside(std::vector<std::vector<double>> &x);

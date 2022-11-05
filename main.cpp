@@ -1,6 +1,7 @@
 #include <iostream>
 #include "FEM.h"
 #include "Element.h"
+#include "CubeScheme.h"
 #include "Utils.h"
 #include "FEM/Geometry/Geometry.h"
 #include <Eigen/Dense>
@@ -21,11 +22,18 @@ int main()
     // member function on the duration object
     std::cout << ((double)duration.count()) / 1000 << std::endl;
 
+    FEM::CubeScheme cs = FEM::CubeScheme(3);
+
     std::vector<std::vector<std::vector<double>>> *x = e0->givePsiDerivatives();
     Utils::printMatrix((*x)[0]);
     std::cout << std::endl;
     e0 = geo->elements[1];
     std::vector<std::vector<std::vector<double>>> *x2 = e0->givePsiDerivatives();
     Utils::printMatrix((*x2)[0]);
+    std::vector<std::vector<double>> a;
+    a = cs.Z;
+    std::cout << std::endl;
+    std::cout << std::endl;
+    e0->T(a);
     // std::cout << *geo << std::endl;
 }

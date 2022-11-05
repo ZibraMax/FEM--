@@ -25,5 +25,4 @@ namespace FEM
 		}
 		Z = {zz1, zz2, zz3};
 	}
-
 } // namespace FEM
