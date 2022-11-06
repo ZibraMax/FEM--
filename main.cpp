@@ -3,37 +3,25 @@
 #include "Element.h"
 #include "CubeScheme.h"
 #include "Utils.h"
+#include "Elasticity2D.h"
 #include "FEM/Geometry/Geometry.h"
 #include <Eigen/Dense>
 #include <unistd.h>
 #include <chrono>
+#include <windows.h>
 using namespace std::chrono;
-
+using namespace std;
 int main()
 {
     auto start = high_resolution_clock::now();
-
-    FEM::Geometry *geo = new FEM::Geometry("C:/Users/david/Desktop/FEM++/resources/Cube.json");
-    FEM::Element *e0 = geo->elements[0];
+    double E = 21000000;
+    double v = 0.2;
+    FEM::Geometry *geo = new FEM::Geometry("C:/Users/david/Desktop/FEM++/resources/BeamBC.json");
+    FEM::PlaneStress *O = new FEM::PlaneStress(geo, E, v, 0.1, 0.0, 0.0, 0.0);
+    O->solve();
     auto stop = high_resolution_clock::now();
     auto duration = duration_cast<milliseconds>(stop - start);
-
-    // To get the value of duration use the count()
-    // member function on the duration object
     std::cout << ((double)duration.count()) / 1000 << std::endl;
-
-    FEM::CubeScheme cs = FEM::CubeScheme(3);
-
-    std::vector<std::vector<std::vector<double>>> *x = e0->givePsiDerivatives();
-    Utils::printMatrix((*x)[0]);
-    std::cout << std::endl;
-    e0 = geo->elements[1];
-    std::vector<std::vector<std::vector<double>>> *x2 = e0->givePsiDerivatives();
-    Utils::printMatrix((*x2)[0]);
-    std::vector<std::vector<double>> a;
-    a = cs.Z;
-    std::cout << std::endl;
-    std::cout << std::endl;
-    e0->T(a);
+    sleep(10);
     // std::cout << *geo << std::endl;
 }

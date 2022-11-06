@@ -6,8 +6,39 @@ namespace FEM
 	{
 		this->coords = coords;
 		this->gdls = gdls;
+		this->_gdl = {};
 		this->n = coords.size();
+		int k = coords[0].size();
+		for (int i = 0; i < k; i++)
+		{
+			for (int j = 0; j < this->n; j++)
+			{
+				this->_gdl.push_back(gdls[i][j]);
+			}
+		}
 	}
+
+	void Element::transformations(std::vector<std::vector<double>> &Z)
+	{
+		det_jacs = {};
+		inv_jacs = {};
+		dpx = {};
+		x = T(Z);
+		std::vector<std::vector<std::vector<double>>> jacs = J(Z);
+		std::vector<std::vector<std::vector<double>>> D = *givePsiDerivatives();
+		for (int i = 0; i < jacs.size(); i++)
+		{
+			std::vector<std::vector<double>> jac = jacs[i];
+			Eigen::MatrixXd Mjac = Utils::matrixFromArray(jac);
+			Eigen::MatrixXd Ijac = Mjac.inverse();
+			double Djac = Mjac.determinant();
+			det_jacs.push_back(Djac);
+			inv_jacs.push_back(Utils::arrayFromMatrix(Ijac));
+			Eigen::MatrixXd dpxx = Ijac * (Utils::matrixFromArray(D[i]).transpose());
+			dpx.push_back(Utils::arrayFromMatrix(dpxx));
+		}
+	}
+
 	std::ostream &operator<<(std::ostream &output, const Element e)
 	{
 		output << "Element of " << e.n << " nodes" << std::endl;
@@ -51,17 +82,15 @@ namespace FEM
 	}
 	std::vector<std::vector<std::vector<double>>> Element::J(std::vector<std::vector<double>> &z)
 	{
-		std::vector<std::vector<std::vector<double>>> Dpsis = this->dpsis(z);
-		std::vector<Eigen::MatrixXd> MDpsis;
-		for (int i = 0; i < Dpsis.size(); i++)
+		std::vector<std::vector<std::vector<double>>> Dpsi = this->dpsis(z);
+		std::vector<std::vector<std::vector<double>>> res;
+		Eigen::MatrixXd Mcoords = Utils::matrixFromArray2(coords);
+		for (int i = 0; i < Dpsi.size(); i++)
 		{
-			MDpsis.push_back(Utils::matrixFromArray(Dpsis[i]));
+			Eigen::MatrixXd d = Utils::matrixFromArray(Dpsi[i]).transpose() * Mcoords;
+			res.push_back(Utils::arrayFromMatrix(d));
 		}
 
-		Eigen::MatrixXd MP = Utils::matrixFromArray(P);
-		Eigen::MatrixXd Mcoords = Utils::matrixFromArray2(coords);
-		Eigen::MatrixXd Tx = MP * Mcoords;
-		std::vector<std::vector<double>> res = Utils::arrayFromMatrix(Tx);
 		return res;
 	}
 
@@ -87,4 +116,9 @@ namespace FEM
 	{
 		return nullptr;
 	}
+	std::vector<double> *Element::giveW()
+	{
+		return nullptr;
+	}
+
 } // namespace FEM

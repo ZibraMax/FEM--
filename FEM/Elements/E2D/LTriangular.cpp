@@ -7,6 +7,7 @@ namespace FEM
 	{
 		PSI = this->psis(Z);
 		DPSI = this->dpsis(Z);
+		transformations(Z);
 		// Definir bordes
 	}
 
@@ -43,6 +44,10 @@ namespace FEM
 	std::vector<std::vector<double>> *LTriangular::givePsi()
 	{
 		return &PSI;
+	}
+	std::vector<double> *LTriangular::giveW()
+	{
+		return &W;
 	}
 
 } // namespace FEM

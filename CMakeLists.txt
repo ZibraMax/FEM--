@@ -31,6 +31,8 @@ endif()
 set(PROJECT_SOURCES
 	main.cpp
 	./FEM/FEM.cpp
+	./FEM/Core.cpp
+	./FEM/Elasticity2D.cpp
 	./FEM/Geometry/Geometry.cpp
 	./FEM/Elements/Element.cpp
 	./FEM/Elements/E2D/Element2D.cpp

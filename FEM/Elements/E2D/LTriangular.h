@@ -20,6 +20,7 @@ namespace FEM
 
 		std::vector<std::vector<std::vector<double>>> *givePsiDerivatives();
 		std::vector<std::vector<double>> *givePsi();
+		std::vector<double> *giveW();
 	};
 
 }
