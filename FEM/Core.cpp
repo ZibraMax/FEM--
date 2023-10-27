@@ -66,23 +66,23 @@ namespace FEM
 			this->K.row(I) *= 0.0;
 			this->K(I, I) = 1.0;
 		}
-
 		this->S = this->S + this->F + this->Q;
+
 		// Utils::writeToCSVfile("S.csv", this->S);
 		// Utils::writeToCSVfile("ebc.csv", this->geometry->ebc);
-		// for (int i = 0; i < this->geometry->ebc.size(); ++i)
-		// {
-		// 	int I = (int)this->geometry->ebc[i][0];
-		// 	std::cout << this->S[I] << std::endl;
-		// 	std::cout << this->geometry->ebc[I][1] << std::endl;
-		// 	this->S[I] = this->geometry->ebc[I][1];
-		// }
+		for (int i = 0; i < this->geometry->ebc.size(); ++i)
+		{
+			int I = (int)this->geometry->ebc[i][0];
+			this->S(I) = this->geometry->ebc[i][1];
+		}
 	}
 	void Core::elementMatrices()
 	{
 	}
 	void Core::solveES()
 	{
+		Utils::writeToCSVfile("S.csv", this->S);
+		Utils::writeToCSVfile("k.csv", this->K);
 		this->U = this->K.llt().solve(this->S);
 		Utils::writeToCSVfile("U.csv", this->U);
 	}
